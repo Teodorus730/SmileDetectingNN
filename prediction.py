@@ -9,19 +9,18 @@ def predict(x, idk=False):
 
     h1 = sigmoid(np.dot(x, W1))
     h2 = sigmoid(np.dot(h1, W2))
-    print(h2)
+
+    react = [("green", "SMILE :)"), ("green", "SAD :(")]
 
     if idk:
-        if round(h2[0]) == 1:
-            print("SMILE :)")
-        elif round(h2[1]) == 1:
-            print("SAD :(")
+        for i in range(len(h2)):
+            if round(h2[i]) == 1:
+                return react[i]
         else:
-            print("I DON'T KNOW")
+            return ["red", "I DON'T KNOW"]
     else:
         m = max(h2)
-        if h2[0] == m:
-            print("SMILE :)")
-        else:
-            print("SAD :(")
+        for i in range(len(h2)):
+            if h2[i] == m:
+                return react[i]
 

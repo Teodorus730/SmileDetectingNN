@@ -13,7 +13,12 @@ width = 45
 height = 45
 margin = 5
 
-size = (WIDTH * (margin + width) + margin, HEIGHT * (margin + height) + margin)
+cells_width = WIDTH * (margin + width) + margin
+cells_height = HEIGHT * (margin + height) + margin
+text_width = cells_width - 2 * margin
+text_height = 50
+
+size = (cells_width, cells_height + text_height + margin)
 screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("neuron")
@@ -23,6 +28,10 @@ done = False
 clock = pygame.time.Clock()
 
 cells = [0 for _ in range(INP_DIM)]
+
+text = pygame.font.SysFont('serif', 30).render("", False, "green")
+text_rect = pygame.Rect(margin, cells_height, text_width, text_height)
+
 
 while not done:
     for event in pygame.event.get():
@@ -37,9 +46,8 @@ while not done:
                 cells[kek] = int(not cells[kek])
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                predict(cells, True)
-            if event.key == pygame.K_a:
-                print(cells)
+                c, t = predict(cells, True)
+                text = pygame.font.SysFont('serif', 35).render(t, False, c)
 
     screen.fill("black")
 
@@ -52,6 +60,8 @@ while not done:
             pygame.draw.rect(screen, color, [col*width+margin*(col+1), row*height+margin*(row+1), width, height])
             color = "white"
 
+    pygame.draw.rect(screen, "#282828", text_rect)
+    screen.blit(text, (text_rect.x, text_rect.y))
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()
