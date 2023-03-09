@@ -1,6 +1,6 @@
 from data.fake import make_fake
 from data.dataset import DATASET
-from config import OUT_DIM
+from config import OUT_DIM, RANDOM_AMOUNT
 from data_funcs import save_data
 
 
@@ -17,7 +17,7 @@ def make():
 
     fake_inp = []
     fake_out = []
-    for i in make_fake(10000):
+    for i in make_fake(RANDOM_AMOUNT):
         fake_inp.append(i)
         fake_out.append([0]*OUT_DIM)
 
